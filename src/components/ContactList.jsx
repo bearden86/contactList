@@ -1,5 +1,6 @@
 //create a component, name it ContactList. make sure it is the default export from the file
 import { useState } from "react";
+import { useEffect } from "react";
 import ContactRow from "./ContactRow";
 
 const dummyContacts = [
@@ -10,7 +11,27 @@ const dummyContacts = [
 
 export default function ContactList() {
   const [contacts, setContacts] = useState(dummyContacts);
+  useEffect(() => {
+    async function fetchContacts() {
+      try {
+        //fetch logic here
+        const response = await fetch(
+          "https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users"
+        );
+        //parse response from the api with the .json() method
+        const result = await response.json();
+        console.log("API response:", result);
+        setContacts(result);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchContacts();
+  }, []);
+
+  console.log("Render");
   console.log("Contacts: ", contacts);
+
   return (
     <table>
       <thead>
@@ -35,7 +56,8 @@ export default function ContactList() {
           // ))
           contacts.map((contact) => {
             return <ContactRow key={contact.id} contact={contact} />;
-        })}
+          })
+        }
       </tbody>
     </table>
   );
