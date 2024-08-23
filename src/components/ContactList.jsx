@@ -1,5 +1,6 @@
 //create a component, name it ContactList. make sure it is the default export from the file
-import React, { useState } from "react";
+import { useState } from "react";
+import ContactRow from "./ContactRow";
 
 const dummyContacts = [
   { id: 1, name: "R2-D2", phone: "222-222-2222", email: "r2d2@droids.com" },
@@ -25,14 +26,16 @@ export default function ContactList() {
         </tr>
         {
           /* map over data here in javascript */
-          dummyContacts.map((contact, index) => (
-            <tr key={index}>
-              <td>{contact.name}</td>
-              <td>{contact.email}</td>
-              <td>{contact.phone}</td>
-            </tr>
-          ))
-        }
+          // dummyContacts.map((contact, index) => (
+          //   <tr key={index}>
+          //     <td>{contact.name}</td>
+          //     <td>{contact.email}</td>
+          //     <td>{contact.phone}</td>
+          //   </tr>
+          // ))
+          contacts.map((contact) => {
+            return <ContactRow key={contact.id} contact={contact} />;
+        })}
       </tbody>
     </table>
   );
